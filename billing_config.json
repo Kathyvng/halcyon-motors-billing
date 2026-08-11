@@ -1,0 +1,75 @@
+{
+  "customer": "Halcyon Motors",
+  "order_form": {
+    "org_id": "90342",
+    "order_form_number": "00002891",
+    "start_date": "2026-08-01",
+    "billing_currency": "USD",
+    "initial_term_months": 36,
+    "auto_renewal": true,
+    "renewal_term_months": 12,
+    "billing_cycle": "calendar_month",
+    "billing_method": "invoicing",
+    "payment_terms": "Net 30",
+    "non_renewal_notice_days": 30,
+    "customer_signature_deadline": "2026-07-31",
+    "signed_date": "2026-08-05",
+    "taxes": "all rates exclusive of taxes"
+  },
+  "rate_plan": {
+    "name": "G3 10MB Dynamic Data Pool",
+    "supported_sim_skus": ["G3-F", "G3-G1"],
+    "included_data_mb_per_sim": 10,
+    "pool_type": "dynamic",
+    "mrc_per_sim_usd": 2.43,
+    "mrc_frequency": "monthly",
+    "overage_rate_usd_per_mb": 0.75,
+    "overage_assessment": "flat rate per MB, assessed against the SIM's aggregate pool balance (sum of included data across all SIMs in the pool) at month-end",
+    "migration_notes": [
+      "G1 SIMs are migrated to the G3 profile at no cost to Customer where migration succeeds.",
+      "SIMs that fail migration remain on a Hologram standard plan at standard rates -- the specific standard rate is NOT itemized in this order form. See SECTION_C (ambiguity #4).",
+      "G3-G1 SIMs that have the G1 profile removed lose outage protection -- worth a proactive customer note, not just a billing note."
+    ]
+  },
+  "sim_hardware": {
+    "G3-F": {
+      "rate_usd": 4.50,
+      "unit": "per SIM",
+      "frequency_assumption": "one-time, at purchase/shipment -- the order form does not label a frequency for hardware the way it labels MRC 'Monthly' and overage 'Pay as you go'. Treated as one-time. See SECTION_C (ambiguity #3).",
+      "counts_toward_minimum_spend": false,
+      "counts_toward_minimum_spend_source": "Order form explicitly excludes 'SIM card purchases' from Actual Spend."
+    }
+  },
+  "sms": {
+    "inbound": { "rate_usd": 0.0, "note": "always free" },
+    "outbound": { "rate_usd": 0.57, "unit": "per SMS" }
+  },
+  "support_package": {
+    "name": "Developer Support",
+    "rate_usd": 0.0,
+    "frequency": "monthly"
+  },
+  "test_mode": {
+    "duration_days": 90,
+    "data_threshold_kb": 100,
+    "outbound_sms_threshold": 10,
+    "transition_rule": "SIM moves from TEST_MODE to ACTIVE on whichever of the three conditions is met FIRST: 90 days elapsed, 100KB data consumed, or 10 outbound SMS sent.",
+    "post_transition_behavior": "Once ACTIVE, the SIM begins incurring MRC and data usage (pool contribution + overage) charges. Contract does not state whether the first month is pro-rated for a mid-month transition. See SECTION_C (ambiguity #2)."
+  },
+  "minimum_spend_schedule": [
+    { "period": "Months 1-3",  "start_month": 1,  "end_month": 3,    "amount_usd_per_month": 3.00 },
+    { "period": "Months 4-6",  "start_month": 4,  "end_month": 6,    "amount_usd_per_month": 300.00 },
+    { "period": "Months 7-12", "start_month": 7,  "end_month": 12,   "amount_usd_per_month": 600.00 },
+    { "period": "Months 12-24","start_month": 12, "end_month": 24,   "amount_usd_per_month": 1200.00,
+      "note": "Contract text overlaps month 12 with the prior tier. This config resolves the overlap by matching tiers in listed order (first match wins), so month 12 is treated as $600/month, not $1200/month. This is a documented assumption, not a silent guess -- see SECTION_C (ambiguity #1)." },
+    { "period": "Months 25-36+","start_month": 25,"end_month": null, "amount_usd_per_month": 2400.00,
+      "note": "Open-ended: applies to month 25 onward, including renewal terms, until superseded by a new order form." }
+  ],
+  "minimum_spend_rules": {
+    "comparison": "Customer pays the greater of the period's Minimum Spend Amount or their actual qualifying fees.",
+    "qualifying_fees_include": ["Rate Plan charges (MRC)", "data overage", "Add-Ons", "Support Package charges"],
+    "qualifying_fees_exclude": ["late payment charges", "SIM card / hardware purchases", "setup or implementation charges"],
+    "overage_carryover_rule": "Fees in excess of the minimum in one period do NOT carry forward or offset future periods.",
+    "renewal_behavior": "At each renewal, the minimum spend resets to the amount in effect during the LAST spend period of the immediately prior term -- i.e., the Year 4 renewal opens at $2,400/month, flat, not re-tiered from $3/month."
+  }
+}
