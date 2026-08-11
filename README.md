@@ -1,6 +1,4 @@
-# halcyon-motors-billing
-
-# Halcyon Motors -- Contract-to-Billing Configuration
+# Halcyon Motors - Contract-to-Billing Configuration
 
 Take-home exercise for Hologram's GTM Engineer, Post-Sales role. Translates the signed
 order form (00002891, org 90342) into a structured billing configuration, computable
